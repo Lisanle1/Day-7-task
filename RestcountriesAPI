@@ -1,63 +1,29 @@
-//Get all the countries from Asia continent /region using Filter function
-
-var request=new XMLHttpRequest();
-request.open('GET','https://restcountries.com/v3.1/all','true');
-request.send();
-request.onload=function (){
-    var countryData=JSON.parse(this.response);
-    const asia=countryData.filter((element)=>{
-        if(element.region==='Asia'){
-            return element.name;
-        }
-    })
-    console.log(asia);}
-//Get all the countries with population of less than 2 lacs using Filter function
-
-var request=new XMLHttpRequest();
-request.open('GET','https://restcountries.com/v3.1/all','true');
-request.send();
-request.onload=function (){
-    var countryData=JSON.parse(this.response);
-    const popu=countryData.filter((element)=>{
-        return element.population<200000;
-    })
-    console.log(popu);}
-
-//Print the following details name, capital, flag using forEach function.
-
-var request=new XMLHttpRequest();
-request.open('GET','https://restcountries.com/v3.1/all','true');
-request.send()
-request.onload=function (){
-    var countryData=JSON.parse(this.response);
-    countryData.forEach((element)=>{
-        console.log(element.name,element.capital,element.flag);
-    })}
-
-//Print the total population of countries using reduce function 
-
-
-var request=new XMLHttpRequest();
-request.open('GET','https://restcountries.com/v3.1/all','true');
-request.send();
-request.onload=function (){
-    var countryData=JSON.parse(this.response);
-    const population=countryData.reduce((acc,element)=>{
-        return acc+element.population;
-    },0)
-    console.log(population);}
-
-//Print the country which use US Dollars as currency.
-
 var request = new XMLHttpRequest();
-request.open('GET', 'https://restcountries.com/v3.1/all', true)
-request.send();
-request.onload = function () {
-        var data = JSON.parse(this.response);
-        for(i=0;i<=data.length;i++){
-            if(data[i].currencies.USD)
-            {
-                console.log(data[i])
-            }
-        }
+
+request.open("GET", "https://restcountries.com/v3/all", true);
+request.send()
+request.onload = function(){
+var data = JSON.parse(this.response)
+console.log(data);
+//a) countries from Asia
+console.log(data.filter(countries=> countries.region === "Asia" ));
+
+//b)countries with population < 200000
+console.log(data.filter(countries => countries.population < 200000 ))
+
+//c) get name, capital, flag using forEach
+data.forEach(countries=> console.log( `name : ${countries.name.common} | Capital : ${countries.capital} | flag : ${countries.flags[1]}`));
+
+//d) calculate the populations by using reduce
+console.log(data.reduce((accum, popu)=> accum + popu.population, 0))
+
+//e) print the countries only has USD
+console.log(data.filter(countries => {   
+    for(let i in countries.currencies){
+        if(countries.currencies[i].code === 'USD') return true
     }
+}))
+}
+request.onerror = function(){
+    console.log("Error:" + this.statusText);
+}

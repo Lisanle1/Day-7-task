@@ -1,4 +1,4 @@
-# Day-8-task
+# Day-7-task
 
 Solving problems using array functions on the rest countries' data.
 
@@ -10,4 +10,4 @@ Print the following details name, capital, flag using forEach function
 
 Print the total population of countries using reduce function
 
-Print the country which uses US Dollars as currency.
+Print the country which uses US Dollars as currency. 
